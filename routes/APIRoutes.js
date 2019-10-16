@@ -17,6 +17,7 @@ router.get('/', async (req, res, next) => {
             //return res.status(500).end();
         }
         else {
+            console.log("tous les produits");
             const productsWooCommerce = await APIWooCommerce.getAllProducts();
             res.status(200);
             return res.json(productsWooCommerce.data);

@@ -6,10 +6,9 @@ class Product {
         this.price = JSONdata.price;
         this.name = JSONdata.name;
         this.description = JSONdata.description;
-        this.virtual = JSONdata.virtual;
+        this.image = JSONdata.images[0].src;      
   }
 }
-
 module.exports = Product;
 
 // catalogue avec id, nom, prix, photo -> images.src
