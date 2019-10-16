@@ -13,7 +13,7 @@ class APIWooCommerce {
     async getAllProducts() {
         console.log("API.products()");
         //console.log(await WooCommerce.get("products"));
-        return WooCommerce.get("products");
+        return WooCommerce.get("products",{'per_page': 30});
     }  
     async getProduct(id) {
         console.log("getProductData("+id+")");
