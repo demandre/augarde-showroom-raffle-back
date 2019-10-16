@@ -42,7 +42,7 @@ class APIWooCommerce {
             if(element.virtual && element.categories[0].slug == "cadran") {
                 const cadran = new Product(element);
                 cadrans.push(cadran);
-                console.log(cadran);
+                
 
             }
         })
@@ -58,7 +58,6 @@ class APIWooCommerce {
             if(element.virtual && element.categories[0].slug == "bracelet") {
                 const bracelet = new Product(element);
                 bracelets.push(bracelet);
-                console.log(bracelet);
             }
         })
 
