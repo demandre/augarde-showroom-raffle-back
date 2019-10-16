@@ -1,6 +1,6 @@
 'use strict';
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
-// import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api"; // Supports ESM
+const Product = require('../models/product');
 
 const WooCommerce = new WooCommerceRestApi({
   url: 'http://vps676674.ovh.net', // Your store URL
@@ -21,15 +21,49 @@ class APIWooCommerce {
         return await WooCommerce.get("products/"+id);
     }
     async getWatches() {
-        this.getAllProducts();
-        console.log(this.getAllProducts());
+        console.log("getWatches()");
+        var watches = {};
+        const allProducts = await this.getAllProducts();
+        allProducts.data.forEach(element => {
+            if(!element.virtual) {
+                const watch = new Product(element);
+                watches.push(watch);
+            }
+        });
+
+        return watches;
     }
-    async getAllCadrants() {
+    async getCadrans() {
         // virtual true + product.categories.slug = "cadran")
+        console.log("getcadrans()");
+        const cadrans = [];
+        const allProducts = await this.getAllProducts();
+        allProducts.data.forEach(element =>{
+            if(element.virtual && element.categories[0].slug == "cadran") {
+                const cadran = new Product(element);
+                cadrans.push(cadran);
+                console.log(cadran);
+
+            }
+        })
+
+        return cadrans;
     }
-    async getAllBracelets() {
+    async getBracelets() {
+        console.log("getBracelets()");
         // virtual true + product.categories.slug = "bracelet")
+        const bracelets = [];
+        const allProducts = await this.getAllProducts();
+        allProducts.data.forEach(element => {
+            if(element.virtual && element.categories[0].slug == "bracelet") {
+                const bracelet = new Product(element);
+                bracelets.push(bracelet);
+                console.log(bracelet);
+            }
+        })
+
+        return bracelets;
     }
-}  
+}
   
 module.exports = new APIWooCommerce();

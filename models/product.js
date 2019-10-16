@@ -6,7 +6,7 @@ class Product {
         this.price = JSONdata.price;
         this.name = JSONdata.name;
         this.description = JSONdata.description;
-
+        this.virtual = JSONdata.virtual;
   }
 }
 

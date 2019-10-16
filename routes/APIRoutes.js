@@ -29,9 +29,42 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/watch', async (req, res, next) => {
-    console.log("watch route");
-    const watches = await APIWooCommerce.getWatches();
-    
 
+    try {
+        console.log("watch route");
+        const watches = await APIWooCommerce.getWatches();
+        res.json(watches);
+    }
+    catch (err) {
+        res.status(404);
+        console.log(err);
+    }
+
+});
+
+router.get('/cadran', async (req, res, next) => {
+
+    try {
+        console.log("cadran route");
+        const cadrans = await APIWooCommerce.getCadrans();
+        res.json(cadrans);
+    }
+    catch (err) {
+        res.status(404);
+        console.log(err);
+    }
+});
+
+router.get('/bracelet', async (req, res, next) => {
+
+    try {
+        console.log("bracelet route");
+        const bracelets = await APIWooCommerce.getBracelets();
+        res.json(bracelets);
+    }
+    catch (err) {
+        res.status(404);
+        console.log(err);
+    }
 });
 module.exports = router;
