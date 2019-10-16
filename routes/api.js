@@ -38,7 +38,7 @@ router.get('/:id', async (req, res, next) => {
     }
 );
 
-router.get('/watch', async (req, res, next) => {
+router.get('/watch/all', async (req, res, next) => {
     try {
         const watches = await APIWooCommerce.getWatches();
         res.json(watches);
@@ -50,7 +50,7 @@ router.get('/watch', async (req, res, next) => {
 
 });
 
-router.get('/cadran', async (req, res, next) => {
+router.get('/cadran/all', async (req, res, next) => {
     try {
         const cadrans = await APIWooCommerce.getCadrans();
         res.json(cadrans);
@@ -61,7 +61,7 @@ router.get('/cadran', async (req, res, next) => {
     }
 });
 
-router.get('/bracelet', async (req, res, next) => {
+router.get('/bracelet/all', async (req, res, next) => {
     try {
         const bracelets = await APIWooCommerce.getBracelets();
         res.json(bracelets);
