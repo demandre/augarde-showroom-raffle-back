@@ -11,12 +11,11 @@ router.get('/all', async (req, res, next) => {
     try {
         console.log("get /all products");
         const productsWooCommerce = await APIWooCommerce.getAllProducts();
-        res.status(200);
         return res.json(productsWooCommerce.data);
     }
     catch(err) {
-        res.status(404);
-        console.log(err);
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
     }
 });
 
@@ -37,42 +36,39 @@ router.get('/:id', async (req, res, next) => {
 );
 
 router.get('/watch', async (req, res, next) => {
-
     try {
         console.log("watch route");
         const watches = await APIWooCommerce.getWatches();
         res.json(watches);
     }
     catch (err) {
-        res.status(404);
-        console.log(err);
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
     }
 
 });
 
 router.get('/cadran', async (req, res, next) => {
-
     try {
         console.log("cadran route");
         const cadrans = await APIWooCommerce.getCadrans();
         res.json(cadrans);
     }
     catch (err) {
-        res.status(404);
-        console.log(err);
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
     }
 });
 
 router.get('/bracelet', async (req, res, next) => {
-
     try {
         console.log("bracelet route");
         const bracelets = await APIWooCommerce.getBracelets();
         res.json(bracelets);
     }
     catch (err) {
-        res.status(404);
-        console.log(err);
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
     }
 });
 module.exports = router;
