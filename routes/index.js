@@ -3,7 +3,7 @@
 const database = require('../models/database');
 class RouterBuilder {
    build(app) {
-        app.use('/product', require('./APIRoutes'))
+        app.use('/product', require('./api'))
     }
 }
 
