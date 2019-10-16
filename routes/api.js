@@ -28,7 +28,7 @@ router.get('/:id', async (req, res, next) => {
             if (req.params.id) {
                 if(await APIWooCommerce.isAWatch(req.params.id) == true) {
                     // traitement qui renvoie toutes les variantes
-                    const WatchAndCadransAndBracelets = await APIWooCommerce.getProductAndBraceletsAndCadrans(req.params.id);
+                    const WatchAndCadransAndBracelets = await APIWooCommerce.getWatchAndBraceletsAndCadrans(req.params.id);
                     return res.json(WatchAndCadransAndBracelets);
                     
                 }

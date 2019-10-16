@@ -2,5 +2,6 @@
 
 module.exports = {
   Database: require('./database'),
-  Product: require('./product')
+  Product: require('./product'),
+  VirtualProduct: require('./virtualProduct')
 };  
