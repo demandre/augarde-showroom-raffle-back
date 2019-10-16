@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const API = require('../controllers/API');
+const APIWooCommerce = require('../controllers/API');
 const router = express.Router();
 const Product = require('../models/product');
 router.use(bodyParser.json());
@@ -11,19 +11,15 @@ router.get('/', async (req, res, next) => {
     console.log("API routes");
     try {
         if (req.query.id) {
-            const product = await API.getProduct(req.query.id);
-            const product2 = new Product(product.data);
-            if (product2) {
-
-                return res.json(product2);
-            }
-            return res.status(500).end();
+            const productWooCommerce = await APIWooCommerce.getProduct(req.query.id);
+            const product = new Product(productWooCommerce.data);
+            return res.json(product);
+            //return res.status(500).end();
         }
         else {
-            const products = await API.getAllProducts();
-            //console.log("products : " + products.data);
+            const productsWooCommerce = await APIWooCommerce.getAllProducts();
             res.status(200);
-            return res.json(products.data);
+            return res.json(productsWooCommerce.data);
         }
     }
     catch(err) {
@@ -32,4 +28,10 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/watch', async (req, res, next) => {
+    console.log("watch route");
+    const watches = await APIWooCommerce.getWatches();
+    
+
+});
 module.exports = router;
