@@ -28,7 +28,17 @@ router.get('/:id', async (req, res, next) => {
             if (req.params.id) {
                 if(await APIWooCommerce.isAWatch(req.params.id) == true) {
                     // traitement qui renvoie toutes les variantes
-                    console.log("is a watch !");
+                    const WatchAndCadransAndBracelets = [];
+                    const cadrans = await APIWooCommerce.getCadrans();
+                    const bracelets = await APIWooCommerce.getBracelets();
+                    const watchWooCommerce = await APIWooCommerce.getProduct(req.params.id);
+                    const watch = new Product(watchWooCommerce.data);
+                    
+                    WatchAndCadransAndBracelets.push(watch);
+                    WatchAndCadransAndBracelets.push(cadrans);
+                    WatchAndCadransAndBracelets.push(bracelets);
+                    
+                    return res.json(WatchAndCadransAndBracelets);
                     
                 }
                 else {
