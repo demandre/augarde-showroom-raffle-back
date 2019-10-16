@@ -7,27 +7,34 @@ const router = express.Router();
 const Product = require('../models/product');
 router.use(bodyParser.json());
 
-router.get('/', async (req, res, next) => {
-    console.log("API routes");
+router.get('/all', async (req, res, next) => {
     try {
-        if (req.query.id) {
-            const productWooCommerce = await APIWooCommerce.getProduct(req.query.id);
-            const product = new Product(productWooCommerce.data);
-            return res.json(product);
-            //return res.status(500).end();
-        }
-        else {
-            console.log("tous les produits");
-            const productsWooCommerce = await APIWooCommerce.getAllProducts();
-            res.status(200);
-            return res.json(productsWooCommerce.data);
-        }
+        console.log("get /all products");
+        const productsWooCommerce = await APIWooCommerce.getAllProducts();
+        res.status(200);
+        return res.json(productsWooCommerce.data);
     }
     catch(err) {
         res.status(404);
         console.log(err);
     }
 });
+
+router.get('/:id', async (req, res, next) => {
+        try {
+            console.log("get " + req.params.id + " product");
+            if (req.params.id) {
+                const productWooCommerce = await APIWooCommerce.getProduct(req.params.id);
+                const product            = new Product(productWooCommerce.data);
+                return res.json(product);
+            }
+        } catch (err) {
+            console.log("ERROR: " + err.message);
+            return res.sendStatus(500);
+        }
+        return res.sendStatus(404);
+    }
+);
 
 router.get('/watch', async (req, res, next) => {
 
