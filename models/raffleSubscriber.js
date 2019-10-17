@@ -23,14 +23,12 @@ class RaffleSubscriber {
                 if (err) {
                     console.log(err);
                     resolve(this);
-                    return;
                 }
 
                 result.forEach(function(row){
                     this.pointTotal = row['count (*)'] * 10;
                 }.bind(this));
                 console.log(this.pointTotal);
-
 
             }.bind(this));
 
@@ -46,6 +44,14 @@ class RaffleSubscriber {
 
             this.pointTotal += subscribeTimeBonus;
 
+            await this.savePoints(connection);
+
+            resolve(this);
+        });
+    }
+
+    savePoints(connection) {
+        return new Promise(async (resolve, reject) => {
             let savePointsQuery = `UPDATE raffle_subscriber 
                                   set point_total = ${this.pointTotal}
                                   where raffle_id = ${this.raffleId} and customer_email = '${this.customerEmail}'`;
@@ -54,9 +60,7 @@ class RaffleSubscriber {
                 if (err) {
                     console.log(err);
                     resolve(this);
-                    return;
                 }
-            console.log(result);
             }.bind(this));
 
             resolve(this);

@@ -22,7 +22,6 @@ class RaffleCollection {
              if (err) {
                  console.log(err);
                  resolve(this);
-                 return;
              }
 
              result.forEach(raffleData => {

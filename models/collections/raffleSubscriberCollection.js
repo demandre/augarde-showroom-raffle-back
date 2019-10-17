@@ -28,7 +28,6 @@ class RaffleSubscriberCollection {
              if (err) {
                  console.log(err);
                  resolve(this);
-                 return;
              }
 
              result.forEach(subscriberData => {
@@ -56,12 +55,10 @@ class RaffleSubscriberCollection {
                 resolve(this);
             }
 
-            console.log(query);
             this.connection.query(query, async function (err, result, fields) {
                 if (err) {
                     console.log(err);
                     resolve(this);
-                    return;
                 }
                 if(result.affectedRows) {
                     await this.load(options);
