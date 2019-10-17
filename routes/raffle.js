@@ -59,7 +59,7 @@ router.post('/subscribe', async (req, res, next) => {
                 customerEmail: req.body.customerEmail,
             });
             if(raffleSubscriberCollection.collection.length) {
-                //create share link and return it (wp page ?useremail)
+                return res.json({"share_link": raffleSubscriberCollection.collection[0].getShareLink()});
             } else {
                 return res.sendStatus(500);
             }
