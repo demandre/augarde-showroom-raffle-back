@@ -27,8 +27,39 @@ var getWPToken = function(req, res){
         }
     });
    };
-  router.post('/', function(req, res){
-        getWPToken(req, res);
-  });
+
+   var verifyToken = function(req, res){
+    var options;
+    // Configure the request
+    options = {
+        url: 'http://vps676674.ovh.net/wp-json/jwt-auth/v1/token/validate',
+        headers: {
+            'Authorization': 'Bearer '+ req.query.token
+          },
+        method: 'POST' 
+    }
+    // Start the request
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.send({
+               success: true,
+               message: "Successfully get the token", 
+               posts: JSON.parse(response.body)
+            });
+        } else {
+            console.log("debug : " + response.statusCode);
+             console.log(error);
+        }
+    });
+   };
+
+router.post('/login', function(req, res){
+    getWPToken(req, res);
+
+});
+router.get('/login/testToken', function(req, res){
+    verifyToken(req, res);
+
+});
 
 module.exports = router;
