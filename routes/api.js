@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const APIWooCommerce = require('../lib/woocommerceProxy');
+const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
 //const Product = require('../models/product');
 //const logger = function(req, res, next) {
