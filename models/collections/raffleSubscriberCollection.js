@@ -39,6 +39,37 @@ class RaffleSubscriberCollection {
          }.bind(this));
      });
     }
+
+    subscribe(options) {
+        return new Promise(async (resolve, reject) => {
+            this.collection = [];
+            let query = "";
+
+            if(options.raffleId) {
+                if(options.customerEmail) {
+                    query = `INSERT INTO raffle_subscriber (raffle_id,customer_email)
+                            VALUES (${options.raffleId},'${options.customerEmail}')`;
+                } else {
+                    resolve(this);
+                }
+            } else {
+                resolve(this);
+            }
+
+            console.log(query);
+            this.connection.query(query, async function (err, result, fields) {
+                if (err) {
+                    console.log(err);
+                    resolve(this);
+                    return;
+                }
+                if(result.affectedRows) {
+                    resolve(await this.load(options));
+                }
+                resolve(this);
+            }.bind(this));
+        });
+    }
 }
 
 module.exports = RaffleSubscriberCollection;
