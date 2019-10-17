@@ -4,10 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
-const UserCollection = require('../models/collections/userCollection')
+//const UserCollection = require('../models/collections/userCollection')
 router.use(bodyParser.json());
 
-let userCollection = new UserCollection();
+let userCollection = require('../models/collections/userCollection');
 
 var getWPToken = function(req, res){
     var options;
@@ -74,5 +74,6 @@ router.get('/login/testToken', async function(req, res){
     console.log(userCollection);
     return res.json(product);
 });
+
 
 module.exports = router;
