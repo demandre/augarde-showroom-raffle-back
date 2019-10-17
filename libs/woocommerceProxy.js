@@ -12,6 +12,9 @@ const WooCommerce = new WooCommerceRestApi({
 
 class APIWooCommerce {
 
+    async getToken() {
+        WooCommerce.post()
+    }
     async getAllProducts() {
         console.log("API.products()");
         return WooCommerce.get("products", {'per_page': 30});
@@ -31,7 +34,6 @@ class APIWooCommerce {
         let productWooCommerce = await this.getProduct(id);
         const watch = this.isProductAWatch(productWooCommerce);
         if(watch) {
-            console.log("IsAwAtch!");
             const cadrans = await this.getCadrans();
             const bracelets = await this.getBracelets();
             const watch = await this.setProductFromWooCommerceProduct(productWooCommerce.data);
@@ -39,7 +41,6 @@ class APIWooCommerce {
             return WatchAndCadransAndBracelets;
         }
         else {
-            console.log("not a watch");
             const product = this.setProductFromWooCommerceProduct(productWooCommerce.data);
             return product;
         }
