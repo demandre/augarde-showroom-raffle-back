@@ -5,13 +5,8 @@ const bodyParser = require('body-parser');
 const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
 let userCollection = require('../models/collections/userCollection');
-//const Product = require('../models/product');
-//const logger = function(req, res, next) {
-    //console.log(req.method + " product " + req.url);
-    //next();
-//};
+
 router.use(bodyParser.json());
-//router.use(logger);
 
 router.get('/all', async (req, res, next) => {
     try {
@@ -28,8 +23,7 @@ router.get('/:id', async (req, res, next) => {
         try {
             if (req.params.id) {
                 const product = await APIWooCommerce.getProductAndCheckWatch(req.params.id);
-                //console.log(product);
-                return res.json(product);    
+                return res.json(product);
             }
         } catch (err) {
             console.log("ERROR: " + err.message);

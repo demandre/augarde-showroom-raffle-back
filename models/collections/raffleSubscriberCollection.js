@@ -16,9 +16,10 @@ class RaffleSubscriberCollection {
              if(options.customerEmail) {
                  query = `SELECT * FROM raffle_subscriber 
                             WHERE raffle_id = ${options.raffleId} 
-                            AND subscriber_email = ${options.customerEmail}`;
+                            AND customer_email = '${options.customerEmail}'`;
+             } else {
+                 query = `SELECT * FROM raffle_subscriber WHERE raffle_id = ${options.raffleId}`;
              }
-             query = `SELECT * FROM raffle_subscriber WHERE raffle_id = ${options.raffleId}`;
          } else {
              query = `SELECT * FROM raffle_subscriber`;
          }
