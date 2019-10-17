@@ -6,10 +6,6 @@ const RaffleCollection = require('../models/collections/raffleCollection');
 const RaffleSubscriberCollection = require('../models/collections/raffleSubscriberCollection');
 const Database = require('../libs/Database');
 const router = express.Router();
-const logger = function(req, res, next) {
-    console.log(req.method + " raffle " + req.url);
-    next();
-};
 
 router.use(bodyParser.json());
 router.use(logger);
