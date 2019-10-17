@@ -1,11 +1,6 @@
-class UserCollection {
-    constructor() {
-        this.collection = [];
-    }
+let userCollection = [];
 
-    add(email, token) {
-        this.collection.push(email, token);
-    }
-}
-
-module.exports = UserCollection;
+module.exports = {
+    add: (email, token) => userCollection.push(email, token),
+    get: () => userCollection
+  }

@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
+let userCollection = require('../models/collections/userCollection');
 //const Product = require('../models/product');
 //const logger = function(req, res, next) {
     //console.log(req.method + " product " + req.url);
@@ -42,6 +43,7 @@ router.get('/watch/all', async (req, res, next) => {
     try {
         const watches = await APIWooCommerce.getWatches();
         res.json(watches);
+        console.log(userCollection.get());
     }
     catch (err) {
         console.log("ERROR: " + err.message);
