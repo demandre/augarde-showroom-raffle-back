@@ -6,11 +6,11 @@ const APIWooCommerce = require('../lib/woocommerceProxy');
 const router = express.Router();
 router.use(bodyParser.json());
 
-var getWPToken = function(req, res, username, passwd){
+var getWPToken = function(req, res){
     var options;
     // Configure the request
     options = {
-        url: 'http://vps676674.ovh.net/wp-json/jwt-auth/v1/token?username='+username+'&password='+passwd+'',
+        url: 'http://vps676674.ovh.net/wp-json/jwt-auth/v1/token?username='+req.query.username+'&password='+req.query.passwd+'',
         method: 'POST' 
     }
 
@@ -28,8 +28,7 @@ var getWPToken = function(req, res, username, passwd){
     });
    };
   router.post('/', function(req, res){
-        console.log(req.query.username);
-        getWPToken(req, res, req.query.username, req.query.passwd);
+        getWPToken(req, res);
   });
 
 module.exports = router;
