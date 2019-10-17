@@ -1,22 +1,14 @@
 'use strict';
-const Database = require('../../libs/database');
 const RaffleSubscriber = require('../raffleSubscriber');
 
 class RaffleSubscriberCollection {
-    constructor() {
-        this.connection = null;
+    constructor(connection) {
+        this.connection = connection;
         this.collection = [];
-    }
-
-    async init() {
-        this.connection = await new Database();
     }
 
     load(options) {
      return new Promise(async (resolve, reject) => {
-         if(this.connection === null) {
-             await this.init();
-         }
          this.collection = [];
          let query = "";
 
@@ -48,4 +40,4 @@ class RaffleSubscriberCollection {
     }
 }
 
-module.exports = RaffleCollection;
+module.exports = RaffleSubscriberCollection;
