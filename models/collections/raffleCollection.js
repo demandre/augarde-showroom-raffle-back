@@ -1,22 +1,14 @@
 'use strict';
-const Database = require('../../libs/database');
 const Raffle = require('../raffle');
 
 class RaffleCollection {
-    constructor() {
-        this.connection = null;
+    constructor(connection) {
+        this.connection = connection;
         this.collection = [];
-    }
-
-    async init() {
-        this.connection = await new Database();
     }
 
     load(raffleId) {
      return new Promise(async (resolve, reject) => {
-         if(this.connection === null) {
-             await this.init();
-         }
          this.collection = [];
          let query = "";
 
