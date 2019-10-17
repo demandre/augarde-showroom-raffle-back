@@ -11,10 +11,10 @@ const logger = function(req, res, next) {
 
 router.use(bodyParser.json());
 router.use(logger);
+let raffleCollection = new RaffleCollection();
 
 router.get('/all', async (req, res, next) => {
     try {
-        let raffleCollection = new RaffleCollection();
         raffleCollection.load();
 
         return res.json('ok');
