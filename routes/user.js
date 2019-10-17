@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
-const TokenHelper = require('../utils/tokenHelper');
+const TokenHelper = require('../libs/tokenHelper');
 //const UserCollection = require('../models/collections/userCollection')
 router.use(bodyParser.json());
 let userCollection = require('../models/collections/userCollection');
