@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const RaffleCollection = require('../models/collections/raffleCollection');
-const SubscriberCollection = require('../models/collections/raffleSubscriberCollection');
+const RaffleSubscriberCollection = require('../models/collections/raffleSubscriberCollection');
 const Database = require('../libs/Database');
 const router = express.Router();
 const logger = function(req, res, next) {
@@ -46,12 +46,28 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/subscribe', async (req, res, next) => {
     try {
-        //TODO: verify token and get email
-        await SubscriberCollection.get({
-            raffleId: req.params.raffleId,
-            customerEmail: req.params.customerEmail,
+        let raffleSubscriberCollection = new RaffleSubscriberCollection(connection);
+        //verify token if not 403
+        await raffleSubscriberCollection.load({
+            raffleId: req.body.raffleId,
+            customerEmail: req.body.customerEmail,
         });
-        return res.json(SubscriberCollection.collection);
+
+        if(raffleSubscriberCollection.collection.length) {
+            return res.sendStatus(403);
+        } else {
+            raffleSubscriberCollection.subscribe({
+                raffleId: req.params.raffleId,
+                customerEmail: req.params.customerEmail,
+            });
+            if(raffleSubscriberCollection.collection.length) {
+                //create share link and return it (wp page ?useremail)
+            } else {
+                return res.sendStatus(500);
+            }
+        }
+
+        return res.json(raffleSubscriberCollection.collection);
     }
     catch(err) {
         console.log("ERROR: " + err.message);
