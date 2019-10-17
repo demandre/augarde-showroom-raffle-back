@@ -64,7 +64,9 @@ class RaffleSubscriberCollection {
                     return;
                 }
                 if(result.affectedRows) {
-                    resolve(await this.load(options));
+                    await this.load(options);
+                    await this.collection[0].initPoints(this.connection);
+                    resolve(this);
                 }
                 resolve(this);
             }.bind(this));
