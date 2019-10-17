@@ -4,7 +4,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const APIWooCommerce = require('../libs/woocommerceProxy');
 const router = express.Router();
+const UserCollection = require('../models/collections/userCollection')
 router.use(bodyParser.json());
+
+let userCollection = new UserCollection();
 
 var getWPToken = function(req, res){
     var options;
@@ -17,10 +20,15 @@ var getWPToken = function(req, res){
     // Start the request
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
+            //userCollection = new UserCollection();
+            //user_email & token
+            let bodyJSON = JSON.parse(body);
+            console.log("collection : " + bodyJSON.token);
+            userCollection.add(bodyJSON.user_email, bodyJSON.token )
             res.send({
                success: true,
                message: "Successfully get the token", 
-               posts: JSON.parse(body)
+               posts: bodyJSON
             });
         } else {
              console.log(error);
@@ -59,13 +67,12 @@ var getWPToken = function(req, res){
 
 router.post('/login', function(req, res){
     getWPToken(req, res);
-
 });
 router.get('/login/testToken', async function(req, res){
     verifyToken(req,res);
     const product = await APIWooCommerce.getWatches();
-    return res.json(product);    
-
+    console.log(userCollection);
+    return res.json(product);
 });
 
 module.exports = router;
