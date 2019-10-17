@@ -12,26 +12,28 @@ class RaffleCollection {
         this.connection = await new Database();
     }
 
-     async load(raffleId) {
-        if(this.connection === null) {
-            await this.init();
-        }
-        this.collection = [];
+     load(raffleId) {
+         return new Promise(async (resolve, reject) => {
+             if(this.connection === null) {
+                 await this.init();
+             }
+             this.collection = [];
 
-        if(raffleId) {
-            return this;
-        } else {
-            this.connection.query("SELECT * FROM raffle_entity", function (err, result, fields) {
-                if (err) throw err;
+             if(raffleId) {
+                 return this;
+             } else {
+                 this.connection.query("SELECT * FROM raffle_entity", function (err, result, fields) {
+                     if (err) throw err;
 
-                result.forEach(raffleData => {
-                    let raffle = new Raffle(raffleData);
-                    this.collection.push(raffle);
-                });
-                console.log(this.collection);
-            }.bind(this));
-            return this;
-        }
+                     result.forEach(raffleData => {
+                         let raffle = new Raffle(raffleData);
+                         this.collection.push(raffle);
+                     });
+                     resolve(this);
+                 }.bind(this));
+             }
+         });
+
     }
 }
 

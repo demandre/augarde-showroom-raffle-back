@@ -15,9 +15,8 @@ let raffleCollection = new RaffleCollection();
 
 router.get('/all', async (req, res, next) => {
     try {
-        raffleCollection.load();
-
-        return res.json('ok');
+        await raffleCollection.load();
+        return res.json(raffleCollection.collection);
     }
     catch(err) {
         console.log("ERROR: " + err.message);
