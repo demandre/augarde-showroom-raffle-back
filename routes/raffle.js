@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const RaffleCollection = require('../models/collections/raffleCollection');
 const RaffleSubscriberCollection = require('../models/collections/raffleSubscriberCollection');
-const Database = require('../libs/Database');
+const Database = require('../libs/database');
 const router = express.Router();
 
 router.use(bodyParser.json());
