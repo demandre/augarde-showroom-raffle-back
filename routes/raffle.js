@@ -8,7 +8,6 @@ const Database = require('../libs/Database');
 const router = express.Router();
 
 router.use(bodyParser.json());
-router.use(logger);
 
 let connection = null;
 async function initConnection() {
