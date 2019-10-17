@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const RaffleCollection = require('../models/collections/raffleCollection');
 const RaffleSubscriberCollection = require('../models/collections/raffleSubscriberCollection');
 const Database = require('../libs/database');
+const TokenHelper = require('../libs/tokenHelper');
 const router = express.Router();
 
 router.use(bodyParser.json());
@@ -41,8 +42,10 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/subscribe', async (req, res, next) => {
     try {
+        //TokenHelper.verifyToken(req, res);
+
         let raffleSubscriberCollection = new RaffleSubscriberCollection(connection);
-        //verify token if not 403
+
         await raffleSubscriberCollection.load({
             raffleId: req.body.raffleId,
             customerEmail: req.body.customerEmail,
