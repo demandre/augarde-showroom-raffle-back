@@ -1,10 +1,10 @@
 'use strict';
 
-const database = require('../models/database');
 class RouterBuilder {
    build(app) {
-        app.use('/product', require('./api'))
-    }
+        app.use('/product', require('./api')),
+        app.use('/user', require('./user'))
+    }  
 }
 
 module.exports = new RouterBuilder();

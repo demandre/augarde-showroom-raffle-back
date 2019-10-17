@@ -4,13 +4,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const APIWooCommerce = require('../lib/woocommerceProxy');
 const router = express.Router();
-const Product = require('../models/product');
-const logger = function(req, res, next) {
-    console.log(req.method + " product " + req.url);
-    next();
-};
+//const Product = require('../models/product');
+//const logger = function(req, res, next) {
+    //console.log(req.method + " product " + req.url);
+    //next();
+//};
 router.use(bodyParser.json());
-router.use(logger);
+//router.use(logger);
 
 router.get('/all', async (req, res, next) => {
     try {
