@@ -71,4 +71,5 @@ router.get('/bracelet/all', async (req, res, next) => {
         return res.sendStatus(500);
     }
 });
+
 module.exports = router;

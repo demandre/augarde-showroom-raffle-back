@@ -4,8 +4,8 @@
   "description": "Le showroom d'Augarde",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js "
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
     "mysql2": "^1.7.0",
     "tunnel-ssh": "^4.1.4"
   },
