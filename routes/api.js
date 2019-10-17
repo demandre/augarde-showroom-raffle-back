@@ -26,16 +26,9 @@ router.get('/all', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
         try {
             if (req.params.id) {
-                if(await APIWooCommerce.isAWatch(req.params.id) == true) {
-                    // traitement qui renvoie toutes les variantes
-                    const WatchAndCadransAndBracelets = await APIWooCommerce.getWatchAndBraceletsAndCadrans(req.params.id);
-                    return res.json(WatchAndCadransAndBracelets);
-                    
-                }
-                else {
-                    const product = await APIWooCommerce.getProduct(req.params.id);
-                    return res.json(product);
-                }
+                const product = await APIWooCommerce.getProductAndCheckWatch(req.params.id);
+                //console.log(product);
+                return res.json(product);    
             }
         } catch (err) {
             console.log("ERROR: " + err.message);
