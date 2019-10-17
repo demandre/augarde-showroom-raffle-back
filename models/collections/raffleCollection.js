@@ -18,20 +18,27 @@ class RaffleCollection {
                  await this.init();
              }
              this.collection = [];
+             let query = "";
 
              if(raffleId) {
-                 return this;
+                 query = `SELECT * FROM raffle_entity WHERE id = ${raffleId}`;
              } else {
-                 this.connection.query("SELECT * FROM raffle_entity", function (err, result, fields) {
-                     if (err) throw err;
-
-                     result.forEach(raffleData => {
-                         let raffle = new Raffle(raffleData);
-                         this.collection.push(raffle);
-                     });
-                     resolve(this);
-                 }.bind(this));
+                 query = `SELECT * FROM raffle_entity`;
              }
+
+             this.connection.query(query, function (err, result, fields) {
+                 if (err) {
+                     console.log(err);
+                     resolve(this);
+                     return;
+                 }
+
+                 result.forEach(raffleData => {
+                     let raffle = new Raffle(raffleData);
+                     this.collection.push(raffle);
+                 });
+                 resolve(this);
+             }.bind(this));
          });
 
     }

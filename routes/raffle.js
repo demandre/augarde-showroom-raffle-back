@@ -24,4 +24,15 @@ router.get('/all', async (req, res, next) => {
     }
 });
 
+router.get('/:id', async (req, res, next) => {
+    try {
+        await raffleCollection.load(req.params.id);
+        return res.json(raffleCollection.collection);
+    }
+    catch(err) {
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
+    }
+});
+
 module.exports = router;
