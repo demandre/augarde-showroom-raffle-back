@@ -33,8 +33,8 @@ router.get('/share', async (req, res, next) => {
         let raffleSubscriberCollection = new RaffleSubscriberCollection(connection);
 console.log(req.query);
         await raffleSubscriberCollection.load({
-            raffleId: req.query.raffleId,
-            customerEmail: req.query.customerEmail,
+            raffleId: req.query.raffleid,
+            customerEmail: req.query.customeremail,
         });
 
         if(raffleSubscriberCollection.collection.length) {
