@@ -74,5 +74,13 @@ class RaffleSubscriber {
             resolve(this);
         });
     }
+
+    win(connection) {
+        return new Promise(async (resolve, reject) => {
+            this.isWinner = true;
+            console.log(this.customerEmail + ' is winner');
+            resolve(this);
+        });
+    }
 }
 module.exports = RaffleSubscriber;

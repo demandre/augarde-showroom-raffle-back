@@ -51,6 +51,24 @@ console.log(req.query);
     }
 });
 
+router.get('/launch/:id', async (req, res, next) => {
+    try {
+        let raffleCollection = new RaffleCollection(connection);
+        await raffleCollection.load(req.params.id);
+
+        if(raffleCollection.collection.length) {
+            await raffleCollection.collection[0].initWinners(connection);
+        } else {
+            return res.sendStatus(403);
+        }
+        return res.sendStatus(200);
+    }
+    catch(err) {
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
+    }
+});
+
 
 router.get('/:id', async (req, res, next) => {
     try {
