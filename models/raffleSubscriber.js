@@ -92,7 +92,7 @@ class RaffleSubscriber {
             for(let param in smsData) {
                 smsRequest += param + '=' + encodeURI(smsData[param])+'&';
             }
-            //https.get(smsRequest);
+            https.get(smsRequest);
 
             await this.saveWin(connection);
 
