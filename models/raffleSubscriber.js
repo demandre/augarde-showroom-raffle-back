@@ -1,5 +1,6 @@
 'use strict';
 const RaffleCollection = require('../models/collections/raffleCollection');
+const https = require('https');
 
 class RaffleSubscriber {
     constructor(data) {
@@ -78,7 +79,41 @@ class RaffleSubscriber {
     win(connection) {
         return new Promise(async (resolve, reject) => {
             this.isWinner = true;
-            console.log(this.customerEmail + ' is winner');
+
+            let smsData = {
+                'key' : '6a72611598efa202af944feb5631b849',
+                'destinataires' : '+33630147054',
+                'type' : 'premium',
+                'message' : 'Vous avez été tiré au sort pour la raffle! Rendez-vous rapidement sur www.augarde.com, les stocks sont limités!',
+                'expediteur' : 'Augarde',
+                'date' : '',
+            };
+            let smsRequest = 'https://www.spot-hit.fr/api/envoyer/sms?';
+            for(let param in smsData) {
+                smsRequest += param + '=' + encodeURI(smsData[param])+'&';
+            }
+            //https.get(smsRequest);
+
+            await this.saveWin(connection);
+
+            resolve(this);
+        });
+    }
+
+    saveWin(connection) {
+        return new Promise(async (resolve, reject) => {
+            let savePointsQuery = `UPDATE raffle_subscriber 
+                                  set is_winner = ${this.isWinner}, notified_at = NOW()
+                                  where raffle_id = ${this.raffleId} and customer_email = '${this.customerEmail}'`;
+
+            console.log(savePointsQuery);
+            connection.query(savePointsQuery, async function (err, result, fields) {
+                if (err) {
+                    console.log(err);
+                    resolve(this);
+                }
+            }.bind(this));
+
             resolve(this);
         });
     }
