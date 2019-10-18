@@ -69,7 +69,7 @@ class RaffleSubscriber {
 
     addSharedPoints(connection) {
         return new Promise(async (resolve, reject) => {
-            this.pointTotal += 5;
+            this.pointTotal += 15;
             await this.savePoints(connection);
             resolve(this);
         });
