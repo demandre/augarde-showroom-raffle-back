@@ -28,6 +28,30 @@ router.get('/all', async (req, res, next) => {
     }
 });
 
+router.get('/share', async (req, res, next) => {
+    try {
+        let raffleSubscriberCollection = new RaffleSubscriberCollection(connection);
+console.log(req.query);
+        await raffleSubscriberCollection.load({
+            raffleId: req.query.raffleId,
+            customerEmail: req.query.customerEmail,
+        });
+
+        if(raffleSubscriberCollection.collection.length) {
+            await raffleSubscriberCollection.collection[0].addSharedPoints(connection);
+        } else {
+            return res.sendStatus(403);
+        }
+
+        return res.sendStatus(200);
+    }
+    catch(err) {
+        console.log("ERROR: " + err.message);
+        return res.sendStatus(500);
+    }
+});
+
+
 router.get('/:id', async (req, res, next) => {
     try {
         let raffleCollection = new RaffleCollection(connection);

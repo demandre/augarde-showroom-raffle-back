@@ -66,5 +66,13 @@ class RaffleSubscriber {
             resolve(this);
         });
     }
+
+    addSharedPoints(connection) {
+        return new Promise(async (resolve, reject) => {
+            this.pointTotal += 5;
+            await this.savePoints(connection);
+            resolve(this);
+        });
+    }
 }
 module.exports = RaffleSubscriber;
