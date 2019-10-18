@@ -1,5 +1,6 @@
 'use strict';
 const RaffleSubscriberCollection = require('../models/collections/raffleSubscriberCollection');
+const chooser = require("random-seed-weighted-chooser").default;
 
 class Raffle {
     constructor(data) {
@@ -17,14 +18,17 @@ class Raffle {
             let raffleSubscriberCollection = new RaffleSubscriberCollection(connection);
             await raffleSubscriberCollection.load({'raffleId': this.id});
 
-            // RaffleSubscriberCollection - now choose winners
-            raffleSubscriberCollection.collection.forEach( function(raffleSubscriber) {
-                console.log(raffleSubscriber);
-            });
-            let raffleWinners = raffleSubscriberCollection.collection;
+            let raffleWinners = [];
+            for (let i = 0; i < this.nbWinner; i++) {
+                let raffleWinner = chooser.chooseWeightedObject(raffleSubscriberCollection.collection,'pointTotal');
+                raffleSubscriberCollection.collection = raffleSubscriberCollection.collection.filter(
+                    subscriber => subscriber.customerEmail !== raffleWinner.customerEmail
+                );
+                raffleWinners.push(raffleWinner);
+            }
 
-            raffleWinners.forEach(function(raffleSubscriber) {
-                raffleSubscriber.win(connection);
+            raffleWinners.forEach(function (raffleWinner){
+                raffleWinner.win(connection);
             });
 
             resolve(this);
